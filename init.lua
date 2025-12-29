@@ -736,6 +736,26 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'zbirenbaum/copilot.lua',
+    event = 'InsertEnter',
+    cmd = 'Copilot',
+    config = function()
+      require('copilot').setup {
+        suggestion = {
+          enabled = false,
+          auto_trigger = true,
+          keymap = {
+            accept = '<C-y>', -- Accept suggestion
+            next = '<C-n>', -- Next suggestion
+            prev = '<C-p>', -- Previous suggestion
+            dismiss = '<C-c>', -- Dismiss suggestion
+          },
+        },
+      }
+    end,
+  },
+
   { -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
