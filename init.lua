@@ -894,7 +894,53 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
+    end,
+  },
+
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup {
+        flavour = 'mocha',
+        integrations = {
+          treesitter = true,
+          native_lsp = { enabled = true },
+        },
+      }
+    end,
+  },
+
+  {
+    'rebelot/kanagawa.nvim',
+    priority = 1000,
+    config = function()
+      require('kanagawa').setup {}
+    end,
+  },
+
+  {
+    'ellisonleao/gruvbox.nvim',
+    priority = 1000,
+    config = function()
+      require('gruvbox').setup {
+        contrast = 'hard', -- soft | medium | hard
+      }
+    end,
+  },
+
+  {
+    'sainnhe/gruvbox-material',
+    priority = 1000,
+    config = function()
+      require('gruvbox').setup {}
+      vim.g.gruvbox_material_background = 'hard' -- soft | medium | hard
+      vim.g.gruvbox_material_foreground = 'material' -- material | mix | original
+      vim.g.gruvbox_material_enable_italic = false
+      vim.g.gruvbox_material_better_performance = 1
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
 
