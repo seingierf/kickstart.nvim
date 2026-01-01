@@ -733,6 +733,9 @@ require('lazy').setup({
           end,
         },
       }
+      -- vim.lsp.config('clangd', {
+      --   cmd = { '/usr/bin/clangd-22' },
+      -- })
     end,
   },
 
