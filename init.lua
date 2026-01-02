@@ -225,6 +225,30 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Keep the window-local working directory in sync with the file shown
+-- in that window. This makes `:e foo.hpp` open files relative to the
+-- currently displayed file (useful when jumping via LSP).
+--
+-- BufWinEnter is used instead of BufEnter because LSP jumps often reuse
+-- existing windows/buffers and would otherwise leave the cwd pointing
+-- at the previous file.
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  callback = function(args)
+    local buf = args.buf
+    if vim.bo[buf].buftype ~= '' then
+      return
+    end
+
+    local name = vim.api.nvim_buf_get_name(buf)
+    if name == '' then
+      return
+    end
+
+    local dir = vim.fn.fnamemodify(name, ':p:h')
+    vim.cmd.lcd(dir)
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
