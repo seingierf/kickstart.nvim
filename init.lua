@@ -214,6 +214,24 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp', 'objc', 'objcpp' },
+  callback = function()
+    vim.opt_local.indentexpr = ''
+    vim.opt_local.cindent = true
+    vim.opt_local.smartindent = false
+    vim.opt_local.autoindent = true
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.expandtab = true
+    vim.opt_local.matchpairs:append '<:>'
+    local conform = require 'conform'
+    vim.keymap.set({ 'n', 'v' }, '=', function()
+      conform.format { async = false, lsp_format = 'fallback' }
+    end, { buffer = true, desc = 'Format with clang-format' })
+  end,
+})
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
@@ -1071,7 +1089,7 @@ require('lazy').setup({
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true, disable = { 'ruby', 'cpp' } },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
