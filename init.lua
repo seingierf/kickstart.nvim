@@ -797,7 +797,14 @@ do
         -- lua = true,
         -- python = true,
       }
-      if enabled_filetypes[vim.bo[bufnr].filetype] then
+      local ft = vim.bo[bufnr].filetype
+      -- Only auto-format c/cpp on save if a clang-format config file exists upward from the buffer
+      if ft == 'c' or ft == 'cpp' then
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        local has_cfg = vim.fs.find({ '.clang-format', '_clang-format' }, { upward = true, path = vim.fs.dirname(fname) })[1]
+        return has_cfg and { timeout_ms = 500 } or nil
+      end
+      if enabled_filetypes[ft] then
         return { timeout_ms = 500 }
       else
         return nil
@@ -808,6 +815,8 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
+      c = { 'clang_format' },
+      cpp = { 'clang_format' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
