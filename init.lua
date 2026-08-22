@@ -171,6 +171,12 @@ do
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
   vim.o.confirm = true
+
+  -- Global indentation defaults (for unknown filetypes)
+  vim.o.expandtab = true -- use spaces instead of tabs
+  vim.o.shiftwidth = 2 -- size of an indent
+  vim.o.tabstop = 2 -- number of spaces a <Tab> counts for
+  vim.o.softtabstop = 2 -- how many spaces <Tab>/<BS> use
 end
 
 -- ============================================================
