@@ -365,6 +365,17 @@ do
       topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
       changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
     },
+    on_attach = function(bufnr)
+      local gs = require 'gitsigns'
+
+      -- VS Code–style blame popup
+      vim.keymap.set('n', '<leader>gb', function()
+        gs.blame_line { full = true }
+      end, { buffer = bufnr, desc = 'Git blame line' })
+
+      -- Optional: toggle inline blame
+      vim.keymap.set('n', '<leader>gB', gs.toggle_current_line_blame, { buffer = bufnr, desc = 'Toggle inline blame' })
+    end,
   }
 
   -- Useful plugin to show you pending keybinds.
