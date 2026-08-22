@@ -393,7 +393,14 @@ do
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
+  -- vim.cmd.colorscheme 'tokyonight-night'
+
+  vim.pack.add { gh 'sainnhe/gruvbox-material' }
+  vim.g.gruvbox_material_background = 'hard' -- soft | medium | hard
+  vim.g.gruvbox_material_foreground = 'material' -- material | mix | original
+  vim.g.gruvbox_material_enable_italic = false
+  vim.g.gruvbox_material_better_performance = 1
+  vim.cmd.colorscheme 'gruvbox-material'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
