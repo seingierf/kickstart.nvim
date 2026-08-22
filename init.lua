@@ -977,6 +977,27 @@ do
       end
     end,
   })
+
+  -- Prefer classic cindent over treesitter/smartindent for C-family files.
+  -- Registered after the treesitter FileType autocmd above so it runs last
+  -- and overrides any indentexpr treesitter may have set for these buffers.
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'c', 'cpp', 'objc', 'objcpp' },
+    callback = function()
+      vim.opt_local.indentexpr = ''
+      vim.opt_local.cindent = true
+      vim.opt_local.smartindent = false
+      vim.opt_local.autoindent = true
+      vim.opt_local.shiftwidth = 4
+      vim.opt_local.softtabstop = 4
+      vim.opt_local.expandtab = true
+      vim.opt_local.matchpairs:append '<:>'
+      local conform = require 'conform'
+      vim.keymap.set({ 'n', 'v' }, '=', function()
+        conform.format { async = false, lsp_format = 'fallback' }
+      end, { buffer = true, desc = 'Format with clang-format' })
+    end,
+  })
 end
 
 -- ============================================================
