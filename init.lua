@@ -699,7 +699,9 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    -- clangd = {},
+    -- clangd = {
+    --   cmd = { '/usr/bin/clangd-22' },
+    -- },
     -- gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
