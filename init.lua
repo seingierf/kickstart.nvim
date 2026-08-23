@@ -557,6 +557,12 @@ do
         '--glob=!build*/**',
       },
     },
+    pickers = {
+      buffers = {
+        sort_lastused = true,
+        sort_mru = true,
+      },
+    },
     extensions = {
       ['ui-select'] = { require('telescope.themes').get_dropdown() },
     },
